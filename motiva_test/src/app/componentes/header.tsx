@@ -75,7 +75,7 @@ const Header: React.FC<HeaderProps> = ({ userName, onLogout }) => {
         )}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-[#5E22F3] transition"
+          className="w-8 h-8 flex items-center justify-center cursor-pointer rounded-md hover:bg-[#5E22F3] transition"
         >
           ☰
         </button>
