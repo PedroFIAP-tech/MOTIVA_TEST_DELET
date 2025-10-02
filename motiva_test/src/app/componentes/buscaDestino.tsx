@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 export default function BuscaDestino({ onBuscarRota }: { onBuscarRota: (origem: string, destino: string) => void }) {
     const [origem, setOrigem] = useState("");
     const [destino, setDestino] = useState("");
-    const [usarMinhaLocalizacao, setUsarMinhaLocalizacao] = useState(false);
     const [recentes] = useState(["Casa", "Trabalho", "Faculdade"]);
 
     useEffect(() => {
@@ -22,11 +21,10 @@ export default function BuscaDestino({ onBuscarRota }: { onBuscarRota: (origem: 
     // Function to save a single recent destination to backend API
     const saveDestino = async (destino: string) => {
         try {
-            // Call backend API to create destination, including credentials to send cookies
             const response = await fetch(`https://challenge-java-fgyb.onrender.com/api/destinos`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json", 
+                    "Content-Type": "application/json",
                 },
                 credentials: "include",
                 body: JSON.stringify({ nome: destino }),
@@ -37,17 +35,14 @@ export default function BuscaDestino({ onBuscarRota }: { onBuscarRota: (origem: 
                 console.error("Failed to save recent destination:", response.statusText);
                 alert("Falha ao salvar o destino: " + response.statusText);
             } else {
-                // Dispatch event to notify Recentes component to refresh
                 window.dispatchEvent(new Event("destinoSalvo"));
             }
-            // Update localStorage with the new destination added to existing ones
             let destinosSalvos = JSON.parse(localStorage.getItem("destinosRecentes") || "[]");
             destinosSalvos = [destino, ...destinosSalvos.filter((d: string) => d !== destino)].slice(0, 2);
             localStorage.setItem("destinosRecentes", JSON.stringify(destinosSalvos));
         } catch (error) {
             console.error("Error saving recent destination:", error);
             alert("Erro ao salvar o destino.");
-            // fallback to localStorage on error
             let destinosSalvos = JSON.parse(localStorage.getItem("destinosRecentes") || "[]");
             destinosSalvos = [destino, ...destinosSalvos.filter((d: string) => d !== destino)].slice(0, 2);
             localStorage.setItem("destinosRecentes", JSON.stringify(destinosSalvos));
@@ -59,9 +54,7 @@ export default function BuscaDestino({ onBuscarRota }: { onBuscarRota: (origem: 
     };
 
     const buscarRota = () => {
-        const origemFinal = usarMinhaLocalizacao ? "Minha Localização" : origem;
-
-        if (!origemFinal || origemFinal.trim() === "") {
+        if (!origem || origem.trim() === "") {
             alert("Por favor, insira a origem antes de buscar a rota.");
             return;
         }
@@ -72,10 +65,9 @@ export default function BuscaDestino({ onBuscarRota }: { onBuscarRota: (origem: 
         }
 
         salvarDestinoRecente(destino);
-        onBuscarRota(origemFinal, destino);
+        onBuscarRota(origem, destino);
         setOrigem("");
         setDestino("");
-        setUsarMinhaLocalizacao(false);
     };
 
     return (
@@ -99,18 +91,7 @@ export default function BuscaDestino({ onBuscarRota }: { onBuscarRota: (origem: 
                             onChange={(e) => setOrigem(e.target.value)}
                             placeholder="Onde você está?"
                             className="w-full px-4 py-2 rounded-lg border border-gray-300 text-base shadow-sm focus:ring-2 focus:#5E22F3 focus:outline-none"
-                            disabled={usarMinhaLocalizacao}
                         />
-                        <label className="flex items-center gap-1 text-sm whitespace-nowrap">
-                            <input
-                                type="checkbox"
-                                id="usarLocalizacao"
-                                checked={usarMinhaLocalizacao}
-                                onChange={() => setUsarMinhaLocalizacao(!usarMinhaLocalizacao)}
-                                className="mr-1"
-                            />
-                            Usar Minha Localização
-                        </label>
                     </div>
 
                     {/* Recentes */}
