@@ -61,7 +61,11 @@ const Header: React.FC<HeaderProps> = ({ userName, onLogout }) => {
         {!userName ? (
           <button
             onClick={handleLogin}
-            className="text-white font-medium hover:underline transition"
+            className="text-white cursor-pointer hover:text-white  relative font-semibold  
+             after:content-[''] after:absolute after:left-0 after:-bottom-1 
+             after:w-0 after:h-[2px] after:bg-white 
+             after:transition-all after:duration-300 
+             hover:after:w-full"
           >
             <a> Login</a>
           </button>

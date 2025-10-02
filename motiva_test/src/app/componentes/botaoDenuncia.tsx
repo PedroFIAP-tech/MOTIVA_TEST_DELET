@@ -107,7 +107,7 @@ export default function BotaoDenuncia() {
 
               <button
                 type="submit"
-                className="bg-[#5E22F3] text-white px-4 py-2 rounded hover:bg-red-800"
+                className="bg-[#5E22F3] text-white cursor-pointer px-4 py-2 rounded hover:bg-red-900"
               >
                 Enviar denúncia
               </button>

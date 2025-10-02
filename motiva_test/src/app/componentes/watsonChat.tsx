@@ -34,7 +34,7 @@ const WatsonChat = () => {
             "div[class^='WatsonAssistantChat']"
           ) as HTMLElement;
           if (chatContainer) {
-            chatContainer.style.left = "10px"; // Ajuste conforme necessário
+            chatContainer.style.left = "10px"; 
             chatContainer.style.right = "auto";
           }
         }, 2000); // Tempo para garantir que o chat carregue
