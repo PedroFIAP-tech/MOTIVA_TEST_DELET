@@ -37,22 +37,30 @@ const Header: React.FC<HeaderProps> = ({ userName, onLogout }) => {
   }, [menuOpen]);
 
   return (
-  <header className="bg-[#5E22F3] flex justify-between items-center px-8 bg-gradient-to-r shadow-md relative">
-      <div className="flex items-center text-white font-bold text-xl">
+    <header className="bg-[#5E22F3] flex justify-between items-center 
+                      px-4 py-3    // MOBILE (default)
+                      sm:px-6 sm:py-4   // Tablet
+                      md:px-8          // Desktop
+                      bg-gradient-to-r shadow-md relative">
+      <div className="flex items-center text-white font-bold 
+                      text-base   // MOBILE
+                      sm:text-lg  // Tablet
+                      md:text-xl"> {/* Desktop */}
+                      
         <Link href="/" className="flex items-center">
           <Image
             id="logoViaMobilidade"
             src="/images/LogoMotivaSemEscritaESemFundo.png"
             alt="Logo"
-            width={60}
-            height={8}
-            className="m-5 mr-3"
+            width={36}  // menorzinho no mobile
+            height={36}
+            className="mr-2 sm:mr-3"
           />
-          ViaMobilidade
+          <span className="text-sm sm:text-base md:text-lg">ViaMobilidade</span>
         </Link>
 
         {userName && (
-          <span className="ml-4 text-base font-normal">
+          <span className="ml-2 sm:ml-4 text-xs sm:text-sm md:text-base font-normal">
             Olá, {userName}
           </span>
         )}
